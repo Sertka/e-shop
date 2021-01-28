@@ -1,0 +1,14 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th th:fragment="theader (name, description)" scope="col">
+    <a class="nav-link" th:href="@{/product(page=${param.page},
+                            size=${products.size},
+                            nameFilter=${param.nameFilter},
+                            minFilter=${param.minFilter},
+                            maxFilter=${param.maxFilter},
+                            sortField=${name},
+                            changeSortOrder = true)}"><div th:text="${description}"></div>
+    </a>
+</th>
+
+</html>
