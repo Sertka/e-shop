@@ -12,10 +12,26 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
     <title>EShop application</title>
+    <style>
+        .navbar-brand {
+            display:block;
+            margin: 0 auto;
+        }
+    </style>
+
 </head>
 
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">EShop</a>
+
+    <nav th:fragment="logo" class="navbar fixed-to navbar-light bg-light">
+
+        <p class="container">
+            <a class="navbar-brand" href="#">
+                <img src="pics/logo.png" alt="logo">
+            </a>
+        </p>
+    </nav>
+
+    <nav th:fragment="navbar-client" class="navbar navbar-expand-lg navbar-light" style="background-color: #ffdab9;">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,11 +40,38 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <!--  <li class="nav-item active">
-                <a class="nav-link" th:href="@{/product}">Products</a>
-            </li> -->
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/user}">Users</a>
+                <a class="nav-link" th:href="@{/product}">Товары</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/user}">Пользователи</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Марка
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Все марки</a></li>
+                    <li><a class="dropdown-item" href="#">APPLE</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Samsung</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/cart}">Корзина</a>
             </li>
         </ul>
 

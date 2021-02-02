@@ -63,10 +63,9 @@ public class SecurityConfig {
             http
                     .authorizeRequests()
                     .antMatchers("/*.css", "/*.js").anonymous()
-                    .antMatchers("/user/**").hasAnyRole("ADMIN")
-                    .anyRequest().authenticated() // .anonymous() для неавторизованного доступа
+                    //.antMatchers("/user/**").hasAnyRole("ADMIN")
+                    .anyRequest().permitAll()
                     .and()
-                    .formLogin();
-        }
+                    .formLogin();        }
     }
 }

@@ -18,4 +18,7 @@ public class EshopApplication {
         SpringApplication.run(EshopApplication.class, args);
     }
 
+//    1 Разбить на скрипты миграции V_1 V_2 V_3
+//    2 Добавить Optional
+//    3 Вынести фильтрацию в отдельный бин
 }

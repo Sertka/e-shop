@@ -1,22 +1,25 @@
 package ru.stk.eshop.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "roles")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "r_id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "r_name")
     private String name;
 
 //    @ManyToMany(mappedBy = "roles")

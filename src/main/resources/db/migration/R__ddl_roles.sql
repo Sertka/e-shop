@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS roles;
+
+CREATE TABLE roles (
+  r_id int NOT NULL AUTO_INCREMENT,
+  r_name varchar(50) NOT NULL,
+  PRIMARY KEY (r_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+

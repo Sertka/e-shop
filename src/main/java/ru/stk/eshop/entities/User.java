@@ -14,26 +14,26 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "u_id")
     private Long id;
 
     @NotBlank
-    @Column(name = "username")
+    @Column(name = "u_login")
     private String username;
 
     @NotBlank
-    @Column(name = "pass")
+    @Column(name = "u_pass")
     private String password;
 
     @NotBlank
-    @Column(name = "first_name")
+    @Column(name = "u_first_name")
     private String first_name;
 
-    @Column(name = "last_name")
+    @Column(name = "u_last_name")
     private String last_name;
 
     @NotBlank
-    @Column(name = "email")
+    @Column(name = "u_email")
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
