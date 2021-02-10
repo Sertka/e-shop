@@ -14,10 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Autowired
-    public void authConfigure(AuthenticationManagerBuilder auth,
+    public void authConfigure(AuthenticationManagerBuilder authManager,
                               UserAuthService userAuthService,
                               PasswordEncoder passwordEncoder) throws Exception {
-        auth.inMemoryAuthentication()
+        authManager.inMemoryAuthentication()
                 .withUser("mem")
                 .password(passwordEncoder.encode("pass"))
                 .roles("ADMIN");
@@ -25,7 +25,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userAuthService);
         provider.setPasswordEncoder(passwordEncoder);
-        auth.authenticationProvider(provider);
+        authManager.authenticationProvider(provider);
     }
 
 //    @Configuration
@@ -60,12 +60,17 @@ public class SecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .authorizeRequests()
+            http.authorizeRequests()
                     .antMatchers("/*.css", "/*.js").anonymous()
                     //.antMatchers("/user/**").hasAnyRole("ADMIN")
                     .anyRequest().permitAll()
                     .and()
-                    .formLogin();        }
+                    .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/authUser")
+                    .and()
+                    .logout()
+                    .logoutSuccessUrl("/")
+                    .permitAll();}
     }
 }

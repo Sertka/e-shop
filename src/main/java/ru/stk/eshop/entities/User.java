@@ -1,14 +1,18 @@
 package ru.stk.eshop.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table (name = "users")
 public class User {
@@ -27,10 +31,10 @@ public class User {
 
     @NotBlank
     @Column(name = "u_first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "u_last_name")
-    private String last_name;
+    private String lastName;
 
     @NotBlank
     @Column(name = "u_email")
@@ -40,13 +44,6 @@ public class User {
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private List<Role> roles;
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }

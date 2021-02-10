@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.stk.eshop.entities.SystemUser;
 import ru.stk.eshop.entities.User;
 import ru.stk.eshop.exceptions.NotFoundException;
 import ru.stk.eshop.services.RoleService;
@@ -47,7 +48,7 @@ public class UserController {
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("user", service.findById(id)
                 .orElseThrow(NotFoundException::new));
-        return "user_form";
+        return "user_edit";
     }
 
     @GetMapping("/new")
@@ -55,15 +56,39 @@ public class UserController {
         logger.info("Add new user");
 
         model.addAttribute("roles", roleService.findAll());
-        model.addAttribute(new User());
-        return "user_form";
+        model.addAttribute("systemUser", new SystemUser());
+        return "user_new";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@Valid @ModelAttribute("systemUser") SystemUser systemUser,
+                               BindingResult bindingResult,
+                               Model model) {
+
+        String userName = systemUser.getUsername();
+        logger.debug("Processing registration form for: " + userName);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", roleService.findAll());
+            return "user_new";
+        }
+
+        if (service.findByUsername(userName).isPresent()) {
+            model.addAttribute("systemUser", systemUser);
+            model.addAttribute("registrationError", "Пользователь с таким именем уже существует!");
+            logger.debug("User name already exist");
+            model.addAttribute("roles", roleService.findAll());
+            return "user_new";
+        }
+        service.addUser(systemUser);
+        logger.debug("Successfully created user: " + userName);
+        return "reg_confirmation";
     }
 
     @PostMapping("/update")
     public String updateUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("roles", roleService.findAll());
-            return "user_form";
+            return "user_edit";
         }
         service.save(user);
         return "redirect:/user";

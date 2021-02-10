@@ -6,9 +6,22 @@
                             nameFilter=${param.nameFilter},
                             minFilter=${param.minFilter},
                             maxFilter=${param.maxFilter},
+                            brand = ${param.brand},
                             sortField=${name},
                             changeSortOrder = true)}"><div th:text="${description}"></div>
     </a>
 </th>
+
+
+<th th:fragment="theader-admin (name, description)" scope="col">
+    <a class="nav-link" th:href="@{/product/(page=${param.page},
+                            size=${products.size},
+                            nameFilter=${param.nameFilter},
+                            brand = ${param.brand},
+                            sortField=${name},
+                            changeSortOrder = true)}"><div th:text="${description}"></div>
+    </a>
+</th>
+
 
 </html>

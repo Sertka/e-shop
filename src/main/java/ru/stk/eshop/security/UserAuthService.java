@@ -25,7 +25,7 @@ public class UserAuthService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUsersByUsername(username)
+        return userRepository.findByUsername(username)
                 .map(user -> new User(
                         user.getUsername(),
                         user.getPassword(),

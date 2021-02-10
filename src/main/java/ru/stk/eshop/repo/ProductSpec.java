@@ -19,4 +19,7 @@ public class ProductSpec {
         return (root, query, builder) -> builder.lessThanOrEqualTo(root.get("price"), maxPrice);
     }
 
+    public static Specification<Product> brandEqual(Integer brand) {
+        return (root, query, builder) -> builder.equal(root.get("brand"), brand);
+    }
 }

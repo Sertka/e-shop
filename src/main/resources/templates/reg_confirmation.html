@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html :: head"/>
+
+<nav th:replace="fragments/head.html :: logo"/>
+
+<body>
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card">
+				<header class="card-header">
+					<h4 class="card-title mt-2"><span th:text="'Регистрация'"></span></h4>
+				</header>
+				<article class="card-body">
+					<form th:action="@{/}" method="get" class="form-horizontal">
+
+						<div class="form-group">
+							<label>Пользователь зарегистрирован</label>
+
+						</div>
+
+						<button type="submit" class="btn btn-primary">На главную</button>
+					</form>
+				</article>
+			</div>
+		</div>
+	</div>
+</div>
+<!--	 <a th:href="@{/login}">Login with new user</a>-->
+</body>
+</html>

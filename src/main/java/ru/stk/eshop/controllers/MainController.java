@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.stk.eshop.services.BrandService;
 import ru.stk.eshop.services.ProductService;
 
 import java.math.BigDecimal;
@@ -17,28 +18,40 @@ import java.util.Optional;
 public class MainController {
 
     private static final Logger logger = LoggerFactory.getLogger(ru.stk.eshop.controllers.ProductController.class);
+    private ProductService productService;
+    private BrandService brandService;
 
     @Autowired
-    private ProductService service;
+    public void setBrandService(BrandService brandService) {
+        this.brandService = brandService;
+    }
 
-    @GetMapping("/")
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping
     public String indexProductPage(Model model,
                                    @RequestParam(name = "nameFilter") Optional<String> nameFilter,
                                    @RequestParam(name = "minFilter") Optional<BigDecimal> minFilter,
                                    @RequestParam(name = "maxFilter") Optional<BigDecimal> maxFilter,
                                    @RequestParam(name = "page") Optional<Integer> page,
                                    @RequestParam(name = "size") Optional<Integer> size,
+                                   @RequestParam(name = "brand") Optional<Integer> brand,
                                    @RequestParam(name = "sortField") Optional<String> sortField,
                                    @RequestParam(name = "changeSortOrder") Optional<Boolean> changeSortOrder) {
 
         logger.info("Index page update");
 
 
-        model.addAttribute("products", service.findWithFilter(nameFilter,
+        model.addAttribute("brands", brandService.findAll());
+        model.addAttribute("products", productService.findWithFilter(nameFilter,
                 minFilter,
                 maxFilter,
                 page,
                 size,
+                brand,
                 sortField,
                 changeSortOrder));
         return "index";

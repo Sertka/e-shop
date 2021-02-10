@@ -4,21 +4,21 @@ INSERT INTO roles (r_name)
 VALUES
 ('ROLE_ADMIN'),
 ('ROLE_MANAGER'),
-('ROLE_USER'),
-('ROLE_GUEST');
+('ROLE_CLIENT');
 
 INSERT INTO users (u_login, u_pass, u_first_name, u_last_name, u_email)
 VALUES
 ('alex','alex','Александр','Иванов','alex@stk.com'),
 ('andre','andre','Андрей','Петров','andre@stk.com'),
-('serge','serge','Сергей','Сидоров','serge@stk.com');
+('serge','serge','Сергей','Сидоров','serge@stk.com'),
+('anto','anto','Антон','Атоманов','anto@stk.com');
 
 INSERT INTO user_roles (user_id, role_id)
 VALUES
 (1, 1),
-(2, 3),
-(3, 2);
-
+(2, 2),
+(3, 3),
+(4, 3);
 
 INSERT INTO product_brands (b_name)
 VALUES

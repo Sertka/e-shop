@@ -10,9 +10,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.stk.eshop.entities.Product;
+import ru.stk.eshop.grpc.GrpcServer;
 import ru.stk.eshop.repo.ProductRepository;
 import ru.stk.eshop.repo.ProductSpec;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -43,6 +45,7 @@ public class ProductService{
                                       Optional<BigDecimal> maxFilter,
                                       Optional<Integer> page,
                                       Optional<Integer> size,
+                                      Optional<Integer> brand,
                                       Optional<String> sortField,
                                       Optional<Boolean> changeSortOrder) {
 
@@ -64,7 +67,9 @@ public class ProductService{
     if (maxFilter.isPresent()) {
       spec = spec.and(ProductSpec.priceLess(maxFilter.get()));
     }
-
+    if (brand.isPresent()) {
+      spec = spec.and(ProductSpec.brandEqual(brand.get()));
+    }
 
     if (sortField.isPresent() && !sortField.get().equals("")) {
       currentPage = repo.findAll(spec, PageRequest.of(page.orElse(1) - 1,
@@ -95,6 +100,15 @@ public class ProductService{
         }
 
         p.setPrintPrice(formatter.format(p.getPrice()));
+    }
+
+    GrpcServer gs = new GrpcServer();
+    try {
+      gs.newServer();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
 
     return currentPage;
