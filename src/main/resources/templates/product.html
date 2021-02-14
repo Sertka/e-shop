@@ -2,9 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head.html::head">
-    <script type="text/javascript" th:src="@{/js/script.js}"></script>
-</head>
+<head th:replace="fragments/head.html::head"></head>
 
 <body>
 
@@ -12,9 +10,6 @@
 <nav th:replace="fragments/head.html :: navbar-admin"/>
 
 <div class="container">
-    <br>
-    <a>Добавлен новый товар</a>
-    <input id="resultInput" type="text" size="70">
 
     <div class="row py-2">
         <!-- Button "New product" sec:authorize="hasAnyRole('ROLE_SUPER', 'ROLE_ADMIN', 'ROLE_USER')"-->

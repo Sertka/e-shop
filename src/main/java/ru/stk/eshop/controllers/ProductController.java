@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.stk.eshop.entities.Greeting;
 import ru.stk.eshop.entities.Product;
 import ru.stk.eshop.exceptions.NotFoundException;
 import ru.stk.eshop.services.BrandService;
@@ -30,7 +29,6 @@ public class ProductController {
     private ProductService service;
     private BrandService brandService;
     private TypeService typeService;
-    private WsController controllerWs;
 
     @Autowired
     public void setService(ProductService service) {
@@ -43,10 +41,6 @@ public class ProductController {
     @Autowired
     public void setTypeService(TypeService typeService) {
         this.typeService = typeService;
-    }
-    @Autowired
-    public void setControllerWs(WsController controllerWs) {
-        this.controllerWs = controllerWs;
     }
 
     @GetMapping
@@ -97,15 +91,6 @@ public class ProductController {
             return "product_form";
         }
         service.save(product);
-
-        new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            controllerWs.sendMessage("/topic/greetings", new Greeting(product.getName()));
-        }).start();
 
         return "redirect:/product";
 

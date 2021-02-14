@@ -3,19 +3,13 @@
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/head.html::head">
-    <script type="text/javascript" th:src="@{/js/script.js}"></script>
+    <nav th:replace="fragments/head.html :: logo"/>
+    <nav th:replace="fragments/head.html :: navbar-main"/>
 </head>
 
 <body>
 
-<nav th:replace="fragments/head.html :: logo"/>
-<nav th:replace="fragments/head.html :: navbar-main"/>
-
 <div class="container">
-
-    <br>
-    <a>Добавлен новый товар</a>
-    <input id="resultInput" type="text" size="70">
 
     <div class="row py-2">
 
@@ -63,7 +57,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 </thead>
                 <tbody>
                     <tr th:if="${products.hasContent()}" th:each="product : ${products.content}">
-                        <th scope="row" th:text="${product.id}">1</th>
+                        <th scope="row" th:text="${product.id}" style="font-size: 80%">></th>
                         <td th:text="${product.name}" style="font-size: 80%"></td>
                         <td th:text="${product.description}" style="font-size: 70%"></td>
                         <td th:text="${product.size}" style="font-size: 80%"></td>
@@ -71,7 +65,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                         <td th:text="${product.printStock}" style="font-size: 80%"></td>
 
                         <td>
-                            <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}">
+                            <a class="btn btn-success" th:href="@{/cart/add/{id}(id = ${product.id})}">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>

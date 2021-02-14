@@ -20,6 +20,13 @@ VALUES
 (3, 3),
 (4, 3);
 
+INSERT INTO order_statuses (os_name)
+VALUES
+('created'),
+('approved'),
+('sent'),
+('received');
+
 INSERT INTO product_brands (b_name)
 VALUES
 ('Apple'),

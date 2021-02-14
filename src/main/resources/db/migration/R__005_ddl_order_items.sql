@@ -8,6 +8,7 @@ CREATE TABLE order_items (
   order_id bigint NOT NULL,
   oi_quantity int NOT NULL,
   oi_price decimal(10,2) NOT NULL,
+  oi_total_price decimal(10,2) NOT NULL,
   oi_details varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (oi_id),
   KEY fk_item_oder_idx (order_id),

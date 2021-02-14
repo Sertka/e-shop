@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.stk.eshop.services.BrandService;
+import ru.stk.eshop.services.CartService;
 import ru.stk.eshop.services.ProductService;
 
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(ru.stk.eshop.controllers.ProductController.class);
     private ProductService productService;
     private BrandService brandService;
+    private CartService cartService;
 
     @Autowired
     public void setBrandService(BrandService brandService) {
@@ -29,6 +31,11 @@ public class MainController {
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    @Autowired
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
     }
 
     @GetMapping
@@ -46,6 +53,7 @@ public class MainController {
 
 
         model.addAttribute("brands", brandService.findAll());
+        model.addAttribute("cart", cartService);
         model.addAttribute("products", productService.findWithFilter(nameFilter,
                 minFilter,
                 maxFilter,
@@ -56,4 +64,6 @@ public class MainController {
                 changeSortOrder));
         return "index";
     }
+
+
 }

@@ -1,7 +1,5 @@
 package ru.stk.eshop.services;
 
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,10 +12,6 @@ import ru.stk.eshop.repo.UserRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import ru.stk.eshop.HelloRequest;
-import ru.stk.eshop.HelloResponse;
-import ru.stk.eshop.HelloServiceGrpc;
 
 @Service
 public class UserService {
@@ -78,7 +72,6 @@ public class UserService {
         } else{
             //new client
             user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_CLIENT")));
-            grpcRoleTransfer("ROLE_CLIENT");
 
         }
 
@@ -91,21 +84,4 @@ public class UserService {
         repo.deleteById(id);
     }
 
-    //gRPC testing
-    public static void grpcRoleTransfer(String roleName) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9089)
-                .usePlaintext()
-                .build();
-
-        HelloServiceGrpc.HelloServiceBlockingStub stub
-                = HelloServiceGrpc.newBlockingStub(channel);
-
-        HelloResponse helloResponse = stub.hello(HelloRequest.newBuilder()
-                .setRole(roleName)
-                .build());
-
-        System.out.println("Response received from server:\n" + helloResponse);
-
-        channel.shutdown();
-    }
 }

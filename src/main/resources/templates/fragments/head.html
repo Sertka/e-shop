@@ -54,6 +54,10 @@
             </li>
         </ul>
 
+<!--        <a class="navbar-text" th:href="@{/cart}"></a>-->
+        <a class="navbar-text" th:href="@{/cart}" th:text="Корзина + '(' + ${cart.totalQuantity} + ')'"></a>
+        <a class="navbar-text" th:href="@{/cart}">&nbsp;&nbsp;</a>
+
         <a sec:authorize="isAnonymous()" class="navbar-text" th:href="@{/login}">Вход</a>
         <a sec:authorize="isAnonymous()" class="navbar-text">&nbsp/&nbsp</a>
         <a sec:authorize="isAnonymous()" class="navbar-text" th:href="@{/register}">Регистрация</a>

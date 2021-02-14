@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.stk.eshop.entities.Product;
-import ru.stk.eshop.grpc.GrpcServer;
 import ru.stk.eshop.repo.ProductRepository;
 import ru.stk.eshop.repo.ProductSpec;
 
@@ -100,15 +99,6 @@ public class ProductService{
         }
 
         p.setPrintPrice(formatter.format(p.getPrice()));
-    }
-
-    GrpcServer gs = new GrpcServer();
-    try {
-      gs.newServer();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
     }
 
     return currentPage;
