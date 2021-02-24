@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html :: head">
+    <nav th:replace="fragments/head.html :: logo"/>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row justify-content-center" style="margin-top: 10px">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2"><span th:text="'Заказ создан!'"></span></h4>
+                </header>
+                <div style="padding-top: 30px" class="card-body">
+                    <form th:object="${order}">
+                        <div class="form-group">
+                            <label th:text = "'Заказ с номером ' + *{id} + ' успешно создан'" ></label>
+                            <br/>
+                            <label th:text = "'Сумма заказа: ' + *{printPrice} + ' рублей'" ></label>
+                            <br/>
+                            <label th:text = "'Планируеммая дата доставки: ' + *{printDeliveryDate}" ></label>
+                            <br/>
+                            <label th:text = "'Статус Вы можете отслеживать в меню - Мои заказы'" ></label>
+                        </div>
+                        <a type="button" class="btn btn-primary" th:href="@{/}">Вернуться в магазин</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:replace="fragments/footer.html :: scripts" />
+
+</body>
+
+</html>

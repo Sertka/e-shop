@@ -6,12 +6,12 @@ VALUES
 ('ROLE_MANAGER'),
 ('ROLE_CLIENT');
 
-INSERT INTO users (u_login, u_pass, u_first_name, u_last_name, u_email)
+INSERT INTO users (u_login, u_pass, u_first_name, u_last_name, u_phone, u_email, u_address)
 VALUES
-('alex','alex','Александр','Иванов','alex@stk.com'),
-('andre','andre','Андрей','Петров','andre@stk.com'),
-('serge','serge','Сергей','Сидоров','serge@stk.com'),
-('anto','anto','Антон','Атоманов','anto@stk.com');
+('alex','$2y$12$57ZDYJXOGV/I375a.6g68uzq7QLhPo281zPztKMMnM2AsNhTpUdju','Александр','Иванов','+7 (495) 555-54-54','alex@stk.com','Москва, ул. Островитянинова, д.55, кв. 90'),
+('andre','$2y$12$exNCejjTJOygtq/0c5cezuOPIikdIRGovx7AacwiFOd2dO9WC9snS','Андрей','Петров','+7 (495) 123-11-11','andre@stk.com','Москва, ул. Виноградова, д.11 кв. 115'),
+('serge','$2y$12$DEAJkLZU4VpLAXVQEr8pGO8OgIlLwbtzgHeT09TRPdWKzg1MGVPsO','Сергей','Сидоров','+7 (499) 121-12-12','serge@stk.com','Москва, 3-я Улица Строителей, д.25 кв. 12'),
+('anto','$2y$12$byn5kM9CA6puF4o27e2dBuMU6.hvq9Ok3Go7mK12BEbojet3K/Gwe','Антон','Атоманов','+7 (499) 853-25-17','anto@stk.com','Москва, ул. Азовская, д.5 кв. 31');
 
 INSERT INTO user_roles (user_id, role_id)
 VALUES
@@ -19,13 +19,6 @@ VALUES
 (2, 2),
 (3, 3),
 (4, 3);
-
-INSERT INTO order_statuses (os_name)
-VALUES
-('created'),
-('approved'),
-('sent'),
-('received');
 
 INSERT INTO product_brands (b_name)
 VALUES

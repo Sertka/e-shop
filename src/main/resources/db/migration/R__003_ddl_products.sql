@@ -6,7 +6,7 @@ CREATE TABLE products (
   p_description varchar(300) DEFAULT NULL,
   p_price decimal(10,2) NOT NULL,
   p_stock int NOT NULL,
-  p_size varchar (50),
+  p_size varchar (50) NOT NULL,
   p_weight INT NOT NULL,
   brand_id int NOT NULL,
   type_id int NOT NULL,
@@ -15,4 +15,4 @@ CREATE TABLE products (
   KEY fk_product_type_idx (type_id),
   CONSTRAINT fk_product_brand FOREIGN KEY (brand_id) REFERENCES product_brands (b_id),
   CONSTRAINT fk_product_type FOREIGN KEY (type_id) REFERENCES product_types (pt_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;

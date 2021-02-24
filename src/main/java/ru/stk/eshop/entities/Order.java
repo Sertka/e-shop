@@ -25,8 +25,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "status_code")
+    @Column(name = "o_status")
+    @Enumerated
     private OrderStatus status;
 
     @Column(name = "o_price")
@@ -43,9 +43,21 @@ public class Order {
     @CreationTimestamp
     private LocalDateTime updateDate;
 
+    @Column(name = "o_phone")
+    private String phone;
+
+    @Column(name = "o_address")
+    private String address;
+
     @Column(name = "o_details")
     private String details;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
+
+    @Transient
+    private String printPrice;
+
+    @Transient
+    private String printDeliveryDate;
 }

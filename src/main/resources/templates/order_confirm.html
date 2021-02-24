@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html :: head">
+    <nav th:replace="fragments/head.html :: logo"/>
+</head>>
+
+<body>
+<div class="container">
+    <div class="row py-2">
+<!--        <form th:action="@{/order_confirm}" th:method="post" th:object="${order}">-->
+        <form th:object="${cart}">
+<!--            <input type="hidden" th:field="*{id}">-->
+            <div class="form-group">
+                <label>Адрес доставки:</label>
+                <input type="text" class="form-control" th:field="*{address}">
+            </div>
+
+            <div class="form-group">
+                <label>Телефон:</label>
+                <input type="text" class="form-control" th:field="*{phone}">
+            </div>
+
+            <div class="form-group">
+                <label th:text = "'Планируеммая дата доставки: ' + *{printDeliveryDate}" ></label>
+            </div>
+
+
+            <div class="col-12">
+                <table class="table table-bordered my-2">
+                    <thead class="table-blue">
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Цена(руб.)</th>
+                        <th scope="col">Количество</th>
+                        <th scope="col">Стоимость(руб.)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cartItem, itrStat : ${cart.getItems()}">
+                        <td th:text="${itrStat.index + 1}"></td>
+                        <td th:text="${cartItem.product.name}"></td>
+                        <td th:text="${cartItem.product.printPrice}"></td>
+                        <td th:text="${cartItem.quantity}"></td>
+                        <td th:text="${cartItem.printTotalPrice}"></td>
+                     </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <span th:text="'Общая стоимость: ' + ${cart.getPrintTotalPrice} + ' руб.'" style="font-weight:bold"></span>
+                <br/>
+                <br/>
+            </div>
+            <div class="col-sm-6 controls">
+                <a type="button" class="btn btn-secondary" th:href="@{/cart}">Назад</a>
+                <a type="button" class="btn btn-primary" th:href="@{/order_result}">Подтвердить заказ</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script th:replace="fragments/footer.html :: scripts"/>
+
+</body>
+</html>

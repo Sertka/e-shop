@@ -37,8 +37,16 @@ public class User {
     private String lastName;
 
     @NotBlank
+    @Column(name = "u_phone")
+    private String phone;
+
+    @NotBlank
     @Column(name = "u_email")
     private String email;
+
+    @NotBlank
+    @Column(name = "u_address")
+    private String address;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",

@@ -9,6 +9,6 @@ CREATE TABLE user_roles (
   KEY fk_role_idx (role_id),
   CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles (r_id),
   CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (u_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;

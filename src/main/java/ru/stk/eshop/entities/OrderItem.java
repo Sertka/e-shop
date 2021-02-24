@@ -1,6 +1,5 @@
 package ru.stk.eshop.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,4 +39,6 @@ public class OrderItem {
     @Column(name = "oi_details")
     private String details;
 
+    @Transient
+    private String printTotalPrice;
 }

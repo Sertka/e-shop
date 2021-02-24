@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head.html :: head"/>
+<head th:replace="fragments/head.html :: head">
+    <nav th:replace="fragments/head.html :: logo"/>
+    <nav th:replace="fragments/head.html :: navbar-admin"/>
+</head>
 
 <body>
-
-<nav th:replace="fragments/head.html :: logo"/>
-<nav th:replace="fragments/head.html :: navbar-main"/>
 
 <div class="container">
     <div class="row py-2">
@@ -25,12 +25,12 @@
                 </div>
                 <div class="form-group">
                     <label>Имя</label>
-                    <input type="text" class="form-control" th:field="*{first_name}" placeholder="введите имя">
-                    <small th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}">Имя не может быть пустым</small>
+                    <input type="text" class="form-control" th:field="*{firstName}" placeholder="введите имя">
+                    <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Имя не может быть пустым</small>
                 </div>
                 <div class="form-group">
                     <label>Фамилия</label>
-                    <input type="text" class="form-control" th:field="*{last_name}" placeholder="введите фамилию">
+                    <input type="text" class="form-control" th:field="*{lastName}" placeholder="введите фамилию">
                 </div>
                 <div class="form-group">
                     <label>E-mail</label>

@@ -9,12 +9,12 @@ CREATE TABLE order_items (
   oi_quantity int NOT NULL,
   oi_price decimal(10,2) NOT NULL,
   oi_total_price decimal(10,2) NOT NULL,
-  oi_details varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  oi_details varchar(255) DEFAULT NULL,
   PRIMARY KEY (oi_id),
   KEY fk_item_oder_idx (order_id),
   KEY fk_item_product_idx (product_id),
   CONSTRAINT fk_item_oder FOREIGN KEY (order_id) REFERENCES orders (o_id),
   CONSTRAINT fk_item_product FOREIGN KEY (product_id) REFERENCES products (p_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;

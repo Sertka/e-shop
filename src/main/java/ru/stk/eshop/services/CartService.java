@@ -10,6 +10,8 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.stk.eshop.entities.OrderItem;
 import ru.stk.eshop.entities.Product;
 import ru.stk.eshop.exceptions.NotFoundException;
+import ru.stk.eshop.utils.PriceFormatter;
+import ru.stk.eshop.utils.SenderApp;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,8 +30,12 @@ public class CartService {
     }
 
     private List<OrderItem> items;
-    private BigDecimal totalCost;
+    private String address;
+    private String phone;
+    private String printDeliveryDate;
+    private BigDecimal totalPrice;
     private Integer totalQuantity;
+    private String printTotalPrice;
 
     public CartService() {
         items = new ArrayList<>();
@@ -46,6 +52,7 @@ public class CartService {
 
     public void add(Product product) {
         OrderItem orderItem = findOrderFromProduct(product);
+
         if (orderItem == null) {
             orderItem = new OrderItem();
             orderItem.setProduct(product);
@@ -54,9 +61,15 @@ public class CartService {
             orderItem.setId(0L);
             orderItem.setTotalPrice(new BigDecimal(0));
             items.add(orderItem);
+            //RabbitMQ send
+            try {
+                SenderApp.send(product.getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         orderItem.setQuantity(orderItem.getQuantity() + 1);
-        //recalculate();
+        recalculate();
     }
 
     public void setQuantity(Product product, Integer quantity) {
@@ -68,26 +81,46 @@ public class CartService {
         recalculate();
     }
 
+    public void removeById(Long productId) {
+        if (productService.findById(productId).isPresent()) {
+            Product product = productService.findById(productId).get();
+            this.remove(product);
+        } else throw new NotFoundException();
+    }
+
     public void remove(Product product) {
         OrderItem orderItem = findOrderFromProduct(product);
         if (orderItem == null) {
             return;
         }
-        items.remove(orderItem);
+        if (orderItem.getQuantity() <= 1){
+            items.remove(orderItem);
+        }else{
+            orderItem.setQuantity(orderItem.getQuantity() - 1);
+        }
         recalculate();
     }
 
     public void recalculate() {
-        totalCost = new BigDecimal(0);
+        totalPrice = new BigDecimal(0);
         totalQuantity = 0;
         for (OrderItem o : items) {
             o.setTotalPrice(o.getProduct().getPrice().multiply(new BigDecimal(o.getQuantity())));
-            totalCost = totalCost.add(o.getTotalPrice());
+            o.setPrintTotalPrice(PriceFormatter.format(o.getTotalPrice()));
+            totalPrice = totalPrice.add(o.getTotalPrice());
             totalQuantity = totalQuantity + o.getQuantity();
         }
+        printTotalPrice = PriceFormatter.format(totalPrice);
+    }
+
+    public void reset(){
+        items = new ArrayList<>();
+        BigDecimal totalCost = new BigDecimal(0);
+        totalQuantity = 0;
     }
 
     private OrderItem findOrderFromProduct(Product product) {
         return items.stream().filter(o -> o.getProduct().getId().equals(product.getId())).findFirst().orElse(null);
     }
+
 }

@@ -1,7 +1,5 @@
 package ru.stk.eshop.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,11 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.stk.eshop.entities.Product;
 import ru.stk.eshop.repo.ProductRepository;
 import ru.stk.eshop.repo.ProductSpec;
+import ru.stk.eshop.utils.PriceFormatter;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,10 +79,6 @@ public class ProductService{
 
     //update printable fields
 
-    DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
-    symbols.setGroupingSeparator(' ');
-    DecimalFormat formatter = new DecimalFormat("###,###", symbols);
-
     for (Product p: currentPage){
         if (p.getStock() == 0) {
           p.setPrintStock(STOCK_EMPTY);
@@ -98,7 +90,7 @@ public class ProductService{
           p.setPrintStock(STOCK_BIG);
         }
 
-        p.setPrintPrice(formatter.format(p.getPrice()));
+        p.setPrintPrice(PriceFormatter.format(p.getPrice()));
     }
 
     return currentPage;
@@ -110,13 +102,7 @@ public class ProductService{
 
   public Optional<Product> findById(Long id) {
     Optional<Product> p = repo.findById(id);
-    if (p.isPresent()){
-      DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
-      symbols.setGroupingSeparator(' ');
-      DecimalFormat formatter = new DecimalFormat("###,###", symbols);
-
-      p.get().setPrintPrice(formatter.format(p.get().getPrice()));
-    }
+    p.ifPresent(product -> product.setPrintPrice(PriceFormatter.format(product.getPrice())));
     return p;
   }
 
