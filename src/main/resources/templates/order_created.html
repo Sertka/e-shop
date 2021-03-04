@@ -19,11 +19,11 @@
                         <div class="form-group">
                             <label th:text = "'Заказ с номером ' + *{id} + ' успешно создан'" ></label>
                             <br/>
-                            <label th:text = "'Сумма заказа: ' + *{printPrice} + ' рублей'" ></label>
+                            <label th:text = "'Сумма заказа: ' + *{getDisplayPrice} + ' рублей'" ></label>
                             <br/>
-                            <label th:text = "'Планируеммая дата доставки: ' + *{printDeliveryDate}" ></label>
+                            <label th:text = "'Планируеммая дата доставки: ' + *{getDisplayDeliveryDate}" ></label>
                             <br/>
-                            <label th:text = "'Статус Вы можете отслеживать в меню - Мои заказы'" ></label>
+                            <label th:text = "'Статус заказа Вы можете отслеживать в меню - Мои заказы'" ></label>
                         </div>
                         <a type="button" class="btn btn-primary" th:href="@{/}">Вернуться в магазин</a>
                     </form>

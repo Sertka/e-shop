@@ -12,6 +12,9 @@ import ru.stk.eshop.repo.UserRepository;
 
 import java.util.stream.Collectors;
 
+/**
+ * Authorisation service
+ */
 @Service
 public class UserAuthService implements UserDetailsService {
 

@@ -5,6 +5,9 @@ import ru.stk.eshop.entities.Product;
 
 import java.math.BigDecimal;
 
+/**
+ * Product list filter
+ */
 public class ProductSpec {
 
     public static Specification<Product> nameLike(String name) {

@@ -21,7 +21,7 @@
                 </header>
                 <div style="padding-top: 30px" class="card-body">
 
-                    <form th:action="@{/user/register}"
+                    <form th:action="@{/register/save}"
                           th:object="${systemUser}" method="post" class="form-horizontal">
 
                         <div class="form-group">
@@ -63,6 +63,18 @@
                         <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />
                         <div style="margin-bottom: 25px" class="input-group">
                             <input th:field="*{lastName}" placeholder="фамилия (*)" class="form-control"/>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" />
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <input th:field="*{phone}" placeholder="телефон (*)" class="form-control"/>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}" />
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <input th:field="*{address}" placeholder="адрес (*)" class="form-control"/>
                         </div>
 
                         <!-- Email -->

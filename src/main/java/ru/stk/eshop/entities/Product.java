@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+/**
+ * Product that can be sold to client
+ */
 @Entity
 @Getter
 @Setter

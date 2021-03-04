@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html :: head">
+    <nav th:replace="fragments/head.html :: logo"/>
+    <nav th:replace="fragments/head.html :: navbar-admin"/>
+</head>
+
+<body>
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead class="table-blue">
+                <tr>
+                    <th scope="col">№ заказа</th>
+                    <th scope="col">Логин</th>
+                    <th scope="col">Имя пользователя</th>
+                    <th scope="col">Дата заказа</th>
+                    <th scope="col">Сумма(руб.)</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.user.username}"></td>
+                    <td th:text="${order.user.firstName} + ' ' + ${order.user.lastName}"></td>
+                    <td th:text="${order.displayCreateDate}"></td>
+                    <td th:text="${order.displayPrice}"></td>
+                    <td th:text="${order.status.displayName}"></td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/order/edit/{id}(id = ${order.id})}"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:action="@{/order/delete/{id}(id = ${order.id})}" th:method="post">
+                            <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script th:replace="fragments/footer.html :: scripts"/>
+
+</body>
+</html>

@@ -3,9 +3,7 @@ package ru.stk.eshop.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.stk.eshop.entities.Brand;
-import ru.stk.eshop.entities.Type;
-import ru.stk.eshop.repo.BrandRepository;
+import ru.stk.eshop.entities.ProductType;
 import ru.stk.eshop.repo.TypeRepository;
 
 import java.util.List;
@@ -21,16 +19,16 @@ public class TypeService {
         this.repo = repo;
     }
 
-    public List<Type> findAll() {
+    public List<ProductType> findAll() {
         return repo.findAll();
     }
 
-    public Optional<Type> findById(Long id) {
+    public Optional<ProductType> findById(Long id) {
         return repo.findById(id);
     }
 
     @Transactional
-    public void save(Type type) {
+    public void save(ProductType type) {
         repo.save(type);
     }
 

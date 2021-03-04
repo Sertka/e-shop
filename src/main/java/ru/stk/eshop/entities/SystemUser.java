@@ -8,11 +8,17 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import ru.stk.eshop.validation.FieldMatch;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * SystemUser is used to create a new user and check correctness
+ * of all fields
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,6 +43,14 @@ public class SystemUser {
     @NotNull(message = "обязательное поле")
     @Size(min = 1, message = "обязательное поле")
     private String lastName;
+
+    @NotNull(message = "обязательное поле")
+    @Size(min = 8, message = "обязательное поле")
+    private String phone;
+
+    @NotNull(message = "обязательное поле")
+    @Size(min = 10, message = "обязательное поле")
+    private String address;
 
     @NotNull(message = "обязательное поле")
     @Email

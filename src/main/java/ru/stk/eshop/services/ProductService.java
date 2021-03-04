@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.stk.eshop.entities.Product;
+import ru.stk.eshop.exceptions.NotFoundException;
 import ru.stk.eshop.repo.ProductRepository;
 import ru.stk.eshop.repo.ProductSpec;
 import ru.stk.eshop.utils.PriceFormatter;
@@ -100,10 +101,12 @@ public class ProductService{
     return repo.findAll(spec);
   }
 
-  public Optional<Product> findById(Long id) {
+  public Product findById(Long id) {
     Optional<Product> p = repo.findById(id);
-    p.ifPresent(product -> product.setPrintPrice(PriceFormatter.format(product.getPrice())));
-    return p;
+    if (p.isPresent()){
+      p.get().setPrintPrice(PriceFormatter.format(p.get().getPrice()));
+      return p.get();
+    }else throw new NotFoundException();
   }
 
   @Transactional

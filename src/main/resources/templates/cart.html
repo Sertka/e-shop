@@ -34,7 +34,7 @@
                     <td th:text="${cartItem.product.name}"/>
                     <td th:text="${cartItem.product.printPrice}"/>
                     <td th:text="${cartItem.quantity}"/>
-                    <td th:text="${cartItem.printTotalPrice}"/>
+                    <td th:text="${cartItem.getDisplayTotalPrice}"/>
                     <td>
                         <a class="btn btn-success" th:href="@{/cart/add/{id}(id = ${cartItem.product.id})}">
                             <i class="fas fa-plus-square"></i>
@@ -47,15 +47,15 @@
                 <tr>
                     <td/><td/>
                     <td><b>Итого заказ:</b></td>
-                    <td th:text="${cart.totalQuantity}" style="font-weight:bold"/>
-                    <td th:text="${cart.getPrintTotalPrice}" style="font-weight:bold"/>
+                    <td th:text="${cart.getTotalCartQuantity}" style="font-weight:bold"/>
+                    <td th:text="${cart.getDisplayTotalCartPrice}" style="font-weight:bold"/>
                 </tr>
                 </tbody>
             </table>
         <br/>
 
         <a type="button" class="btn btn-primary" th:href="@{/}">Продолжить покупки</a>
-        <a type="button" class="btn btn-primary" th:href="@{/order_confirm}">Оформить заказ</a>
+        <a type="button" class="btn btn-primary" th:href="@{/cart/confirm}">Оформить заказ</a>
 
     </div>
     <div th:unless="${cart.getItems().size() > 0}" >

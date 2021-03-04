@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
+/**
+ * Role represents rights that user has in app
+ */
 @Entity
 @Table(name = "roles")
 @Getter
@@ -21,15 +23,4 @@ public class Role {
 
     @Column(name = "r_name")
     private String name;
-
-//    @ManyToMany(mappedBy = "roles")
-//    private List<User> users;
-//
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
 }

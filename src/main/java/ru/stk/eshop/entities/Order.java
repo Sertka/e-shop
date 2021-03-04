@@ -10,6 +10,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * Order contains list of products for each purchasing
+ */
 @Entity
 @Getter
 @Setter
@@ -56,8 +60,14 @@ public class Order {
     private List<OrderItem> orderItems;
 
     @Transient
-    private String printPrice;
+    private String displayPrice;
 
     @Transient
-    private String printDeliveryDate;
+    private String displayCreateDate;
+
+    @Transient
+    private String displayUpdateDate;
+
+    @Transient
+    private String displayDeliveryDate;
 }

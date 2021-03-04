@@ -1,6 +1,5 @@
 package ru.stk.eshop.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +7,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * App users - internal (employees) and external (clients)
+ */
 @Entity
 @Getter
 @Setter
@@ -41,12 +42,12 @@ public class User {
     private String phone;
 
     @NotBlank
-    @Column(name = "u_email")
-    private String email;
-
-    @NotBlank
     @Column(name = "u_address")
     private String address;
+
+    @NotBlank
+    @Column(name = "u_email")
+    private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",

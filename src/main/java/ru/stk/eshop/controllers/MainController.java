@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.stk.eshop.services.BrandService;
 import ru.stk.eshop.services.CartService;
@@ -15,6 +14,9 @@ import ru.stk.eshop.services.ProductService;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+/**
+ * MVC controller for main shop page
+ */
 @Controller
 public class MainController {
 
@@ -38,6 +40,19 @@ public class MainController {
         this.cartService = cartService;
     }
 
+    /**
+     * refreshes main shop page
+     * @param model - model
+     * @param nameFilter - product name
+     * @param minFilter - min price
+     * @param maxFilter - max price
+     * @param page - page number
+     * @param size - lines on the page
+     * @param brand - brand name
+     * @param sortField - sorting by field
+     * @param changeSortOrder - change sort order flag (asc/dsc)
+     * @return refreshed main page
+     */
     @GetMapping
     public String indexProductPage(Model model,
                                    @RequestParam(name = "nameFilter") Optional<String> nameFilter,
@@ -49,9 +64,6 @@ public class MainController {
                                    @RequestParam(name = "sortField") Optional<String> sortField,
                                    @RequestParam(name = "changeSortOrder") Optional<Boolean> changeSortOrder) {
 
-        logger.info("Index page update");
-
-
         model.addAttribute("brands", brandService.findAll());
         model.addAttribute("cart", cartService);
         model.addAttribute("products", productService.findWithFilter(nameFilter,
@@ -62,8 +74,7 @@ public class MainController {
                 brand,
                 sortField,
                 changeSortOrder));
+        logger.info("Main shop page is refreshed");
         return "index";
     }
-
-
 }

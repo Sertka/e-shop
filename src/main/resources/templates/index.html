@@ -15,7 +15,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
         <form class="form-inline mt-3" method="get">
 
-            <label for="form-select" class="form-label">Записей на странице:</label>
+            <label class="form-label">Записей на странице:</label>
             <select class="form-select mx-sm-3 mb-2" name="size">
                 <option selected th:text="${param.size}">записей на странице</option>
                 <option value="10">10</option>

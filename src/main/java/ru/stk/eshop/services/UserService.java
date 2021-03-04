@@ -1,11 +1,15 @@
 package ru.stk.eshop.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.stk.eshop.entities.Product;
 import ru.stk.eshop.entities.SystemUser;
 import ru.stk.eshop.entities.User;
+import ru.stk.eshop.exceptions.NotFoundException;
 import ru.stk.eshop.repo.RoleRepository;
 import ru.stk.eshop.repo.UserRepository;
 
@@ -19,6 +23,7 @@ public class UserService {
     private UserRepository repo;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(ru.stk.eshop.controllers.ProductController.class);
 
     @Autowired
     public void setUserRepository (UserRepository repo){
@@ -37,14 +42,24 @@ public class UserService {
         return repo.findAll();
     }
 
-    public Optional<User> findById(Long id) {
-        return repo.findById(id);
+    public User findById(Long userId) {
+        if (repo.findById(userId).isPresent()) {
+            return repo.findById(userId).get();
+        } else throw new NotFoundException();
     }
 
-    public Optional<User> findByUsername(String username) {
-        return repo.findByUsername(username);
+    public User findByUsername(String username) {
+        if (repo.findByUsername(username).isPresent()) {
+            return repo.findByUsername(username).get();
+        } else{
+            logger.warn("User " + username + " does not found!");
+            throw new NotFoundException();
+        }
     }
 
+    public Boolean usernameExist(String username) {
+        return repo.findByUsername(username).isPresent();
+    }
 
     @Transactional
     public void save(User user) {
@@ -64,6 +79,8 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
         user.setFirstName(systemUser.getFirstName());
         user.setLastName(systemUser.getLastName());
+        user.setPhone(systemUser.getPhone());
+        user.setAddress(systemUser.getAddress());
         user.setEmail(systemUser.getEmail());
 
         if(systemUser.getRoles() != null){

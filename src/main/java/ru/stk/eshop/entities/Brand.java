@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * Brand represents brand of product
+ */
 @Entity
 @Table(name = "product_brands")
 @Getter

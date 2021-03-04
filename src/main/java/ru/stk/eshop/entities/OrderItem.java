@@ -7,7 +7,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-
+/**
+ * OrderItem represents one ordered product
+ */
 @Entity
 @Getter
 @Setter
@@ -40,5 +42,10 @@ public class OrderItem {
     private String details;
 
     @Transient
-    private String printTotalPrice;
+    private String displayPrice;
+
+    @Transient
+    private String displayTotalPrice;
+
+
 }

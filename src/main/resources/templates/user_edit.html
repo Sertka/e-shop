@@ -32,6 +32,19 @@
                     <label>Фамилия</label>
                     <input type="text" class="form-control" th:field="*{lastName}" placeholder="введите фамилию">
                 </div>
+
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="text" class="form-control" th:field="*{phone}" placeholder="введите телефон">
+                    <small th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">телефон не может быть пустым</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <input type="text" class="form-control" th:field="*{address}" placeholder="введите адрес">
+                    <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}">адрес не может быть пустым</small>
+                </div>
+
                 <div class="form-group">
                     <label>E-mail</label>
                     <input type="text" class="form-control" th:field="*{email}" placeholder="введите e-mail">

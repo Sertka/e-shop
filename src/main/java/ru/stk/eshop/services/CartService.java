@@ -9,18 +9,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import ru.stk.eshop.entities.OrderItem;
 import ru.stk.eshop.entities.Product;
-import ru.stk.eshop.exceptions.NotFoundException;
 import ru.stk.eshop.utils.PriceFormatter;
-import ru.stk.eshop.utils.SenderApp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Shopping cart operations and logic.
+ *
+ */
 @Getter
 @Setter
 @Component
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+//@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CartService {
     private ProductService productService;
 
@@ -32,24 +35,31 @@ public class CartService {
     private List<OrderItem> items;
     private String address;
     private String phone;
-    private String printDeliveryDate;
-    private BigDecimal totalPrice;
-    private Integer totalQuantity;
-    private String printTotalPrice;
+    private String displayDeliveryDate;
+    private LocalDateTime deliveryDate;
+    private BigDecimal totalCartPrice;
+    private Integer totalCartQuantity;
+    private String displayTotalCartPrice;
 
     public CartService() {
-        items = new ArrayList<>();
+        items = new ArrayList<>(); //stores all OrderItems added to cart
         BigDecimal totalCost = new BigDecimal(0);
-        totalQuantity = 0;
+        totalCartQuantity = 0;
     }
 
+    /**
+     * Add product to cart by product id
+     * @param productId - product id
+     */
     public void addById(Long productId) {
-        if (productService.findById(productId).isPresent()) {
-            Product product = productService.findById(productId).get();
+        Product product = productService.findById(productId);
             this.add(product);
-        } else throw new NotFoundException();
     }
 
+    /**
+     * Add product to cart
+     * @param product - product object
+     */
     public void add(Product product) {
         OrderItem orderItem = findOrderFromProduct(product);
 
@@ -61,12 +71,6 @@ public class CartService {
             orderItem.setId(0L);
             orderItem.setTotalPrice(new BigDecimal(0));
             items.add(orderItem);
-            //RabbitMQ send
-            try {
-                SenderApp.send(product.getName());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         orderItem.setQuantity(orderItem.getQuantity() + 1);
         recalculate();
@@ -82,10 +86,8 @@ public class CartService {
     }
 
     public void removeById(Long productId) {
-        if (productService.findById(productId).isPresent()) {
-            Product product = productService.findById(productId).get();
-            this.remove(product);
-        } else throw new NotFoundException();
+        Product product = productService.findById(productId);
+        this.remove(product);
     }
 
     public void remove(Product product) {
@@ -102,21 +104,22 @@ public class CartService {
     }
 
     public void recalculate() {
-        totalPrice = new BigDecimal(0);
-        totalQuantity = 0;
+        totalCartPrice = new BigDecimal(0);
+        totalCartQuantity = 0;
         for (OrderItem o : items) {
             o.setTotalPrice(o.getProduct().getPrice().multiply(new BigDecimal(o.getQuantity())));
-            o.setPrintTotalPrice(PriceFormatter.format(o.getTotalPrice()));
-            totalPrice = totalPrice.add(o.getTotalPrice());
-            totalQuantity = totalQuantity + o.getQuantity();
+            o.setDisplayTotalPrice(PriceFormatter.format(o.getTotalPrice()));
+            o.setDisplayPrice(PriceFormatter.format(o.getItemPrice()));
+            totalCartPrice = totalCartPrice.add(o.getTotalPrice());
+            totalCartQuantity = totalCartQuantity + o.getQuantity();
         }
-        printTotalPrice = PriceFormatter.format(totalPrice);
+        displayTotalCartPrice = PriceFormatter.format(totalCartPrice);
     }
 
     public void reset(){
         items = new ArrayList<>();
         BigDecimal totalCost = new BigDecimal(0);
-        totalQuantity = 0;
+        totalCartQuantity = 0;
     }
 
     private OrderItem findOrderFromProduct(Product product) {

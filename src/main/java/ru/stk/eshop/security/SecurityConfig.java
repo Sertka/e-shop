@@ -10,9 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Security configuration
+ */
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Service role set-up
+     */
     @Autowired
     public void authConfigure(AuthenticationManagerBuilder authManager,
                               UserAuthService userAuthService,
@@ -28,41 +34,20 @@ public class SecurityConfig {
         authManager.authenticationProvider(provider);
     }
 
-//    @Configuration
-//    @Order(1)
-//    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http
-//                    .antMatcher("/api/**")
-//                    .authorizeRequests()
-//                    .anyRequest()
-//                    .hasAnyRole("ADMIN", "GUEST")
-//                    .and()
-//                    .httpBasic()
-//                    .authenticationEntryPoint((req, resp, exception) -> {
-//                        resp.setContentType("application/json");
-//                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//                        resp.setCharacterEncoding("UTF-8");
-//                        resp.getWriter().println("{ \"error\": \"" + exception.getMessage() + "\" }");
-//                    })
-//                    .and()
-//                    .csrf().disable()
-//                    .sessionManagement()
-//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        }
-//    }
-
+    /**
+     * Role settings
+     */
     @Configuration
-    @Order(2)
     public static class UiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
                     .antMatchers("/*.css", "/*.js").anonymous()
-                    //.antMatchers("/user/**").hasAnyRole("ADMIN")
+                    .antMatchers("/user/**").hasAnyRole("ADMIN")
+                    .antMatchers("/product/**").hasAnyRole("ADMIN", "MANAGER")
+                    .antMatchers("/order/admin/**").hasAnyRole("ADMIN", "MANAGER")
+                    .antMatchers("/order/edit/**").hasAnyRole("ADMIN", "MANAGER")
                     .anyRequest().permitAll()
                     .and()
                     .formLogin()
