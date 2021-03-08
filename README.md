@@ -15,4 +15,6 @@
 
 Используемые технологии: Spring Boot, Spring Data JPA, MySQL, Maven, Flyway, HTML, CSS, Thymeleaf.
 
+
+Пример главного экрана
 ![Image alt](https://github.com/Sertka/e-shop/raw/master/e-shop_main_page.jpg)
