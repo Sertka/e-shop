@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html :: head"/>
+
+<body>
+<nav th:replace="fragments/navbar.html :: logo"/>
+
+<div class="container">
+    <div class="row py-2">
+
+        <form th:object="${order}">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <h5 th:text = "'Заказ номер: ' + *{id}" ></h5>
+            </div>
+            <br/>
+
+            <div class="form-group">
+                <label>Адрес доставки:</label>
+                <input type="text" class="form-control" th:field="*{address}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Телефон:</label>
+                <input type="text" class="form-control" th:field="*{phone}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label th:text = "'Дата доставки: ' + *{getDisplayDeliveryDate}" ></label>
+            </div>
+
+
+            <div class="col-12">
+                <table class="table table-bordered my-2">
+                    <thead class="table-blue">
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Цена(руб.)</th>
+                        <th scope="col">Количество</th>
+                        <th scope="col">Стоимость(руб.)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="OrderItem : ${order.getOrderItems()}">
+                        <td th:text="${OrderItem.getId()}"></td>
+                        <td th:text="${OrderItem.product.name}"></td>
+                        <td th:text="${OrderItem.displayPrice}"></td>
+                        <td th:text="${OrderItem.quantity}"></td>
+                        <td th:text="${OrderItem.displayTotalPrice}"></td>
+                     </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <span th:text="'Общая стоимость: ' + ${order.getDisplayPrice()} + ' руб.'" style="font-weight:bold"></span>
+                <br/>
+                <br/>
+            </div>
+            <div class="col-sm-6 controls">
+                <a type="button" class="btn btn-secondary" th:href="@{/order/list}">Назад</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<footer th:replace="fragments/footer.html::footer"></footer>
+
+</body>
+</html>

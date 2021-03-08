@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html :: head"/>
+
+<body>
+<nav th:replace="fragments/navbar.html :: logo"/>
+<nav th:replace="fragments/navbar.html :: navbar-admin"/>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/user/update}" th:method="post" th:object="${user}">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" class="form-control" th:field="*{username}" readonly>
+                    <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Логин не может быть пустым</small>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="hidden" class="form-control" th:field="*{password}" placeholder="">
+                    <br/>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" th:href="@{/profile/password/{id}(id = ${user.id})}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Изменить пароль
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" class="form-control" th:field="*{firstName}" placeholder="введите имя">
+                    <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Имя не может быть пустым</small>
+                </div>
+                <div class="form-group">
+                    <label>Фамилия</label>
+                    <input type="text" class="form-control" th:field="*{lastName}" placeholder="введите фамилию">
+                </div>
+
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="text" class="form-control" th:field="*{phone}" placeholder="введите телефон">
+                    <small th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">телефон не может быть пустым</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <input type="text" class="form-control" th:field="*{address}" placeholder="введите адрес">
+                    <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}">адрес не может быть пустым</small>
+                </div>
+
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="text" class="form-control" th:field="*{email}" placeholder="введите e-mail">
+                    <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}">e-mail не может быть пустым</small>
+                </div>
+
+                <div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="form-group">
+                    <label for="roles">Роли</label>
+                    <select multiple class="form-control" id="roles" th:field="*{roles}" required>
+                        <option th:each="role : ${roles}"
+                                th:text="${role.name}"
+                                th:value="${role.id}"
+                                th:selected="${user.roles?.contains(role)}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a class="btn btn-secondary" data-bs-toggle="collapse" th:href="@{/user/admin}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Отмена
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer.html::footer"></footer>
+
+</body>
+
+</html>

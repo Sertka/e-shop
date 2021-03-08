@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html::head">
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+</head>
+
+<body>
+<nav th:replace="fragments/navbar.html :: logo"/>
+
+<div class="container">
+    <br>
+    <h3>Корзина</h3>
+
+    <div th:if="${cart.getItems().size() > 0}" >
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Название товара</th>
+                    <th>Цена за ед.(руб.)</th>
+                    <th>Количество</th>
+                    <th>Сумма(руб.)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cartItem, itrStat : ${cart.getItems()}">
+                    <td th:text="${itrStat.index + 1}"/>
+                    <td th:text="${cartItem.product.name}"/>
+                    <td th:text="${cartItem.product.printPrice}"/>
+                    <td th:text="${cartItem.quantity}"/>
+                    <td th:text="${cartItem.getDisplayTotalPrice}"/>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/cart/add/{id}(id = ${cartItem.product.id})}">
+                            <i class="fas fa-plus-square"></i>
+                        </a>
+                        <a class="btn btn-danger" th:href="@{/cart/remove/{id}(id = ${cartItem.product.id})}">
+                            <i class="fas fa-minus-square"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td/><td/>
+                    <td><b>Итого заказ:</b></td>
+                    <td th:text="${cart.getTotalCartQuantity}" style="font-weight:bold"/>
+                    <td th:text="${cart.getDisplayTotalCartPrice}" style="font-weight:bold"/>
+                </tr>
+                </tbody>
+            </table>
+        <br/>
+
+        <a type="button" class="btn btn-primary" th:href="@{/}">Продолжить покупки</a>
+        <a type="button" class="btn btn-primary" th:href="@{/cart/confirm}">Оформить заказ</a>
+
+    </div>
+    <div th:unless="${cart.getItems().size() > 0}" >
+        <span>Ваша корзина пуста</span>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer.html::footer"></footer>
+
+</body>
+</html>
