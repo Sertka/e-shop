@@ -7,15 +7,11 @@
 </head>
 
 <body>
-
-<nav th:replace="fragments/head.html :: logo"/>
-<nav th:replace="fragments/head.html :: navbar-main"/>
+<nav th:replace="fragments/navbar.html :: logo"/>
 
 <div class="container">
     <br>
     <h3>Корзина</h3>
-
-
 
     <div th:if="${cart.getItems().size() > 0}" >
             <table class="table table-bordered my-2">
@@ -63,21 +59,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="authWarningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Предупреждение</h5>
-            </div>
-            <div class="modal-body">
-                <span>Для формирования заказа Вам необходимо зайти в свою учетную запись</span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Хорошо</button>
-            </div>
-        </div>
-    </div>
-</div>
+<footer th:replace="fragments/footer.html::footer"></footer>
 
 </body>
 </html>

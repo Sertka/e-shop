@@ -59,6 +59,7 @@ public class OrderController {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("orders", orderService.getOrdersByUserId(user.getId()));
         model.addAttribute("cart", cartService);
+        model.addAttribute("user", user);
         logger.info("Order list for user " + user.getUsername() + "is showed");
         return "order_list";
     }
@@ -84,7 +85,7 @@ public class OrderController {
         order.setDisplayDeliveryDate(cartService.getDisplayDeliveryDate());
         model.addAttribute("order", order);
         cartService.reset();
-        logger.info("Order with id" + order.getId() + " is created");
+        logger.info("Order with id {} is created", order.getId());
         return "order_created";
     }
 
@@ -178,6 +179,7 @@ public class OrderController {
     private ModelAndView notFoundExceptionHandler(NotFoundException e){
         ModelAndView modelAndView = new ModelAndView("not_found");
         modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        logger.error("Resource not found exception");
         return modelAndView;
     }
 }

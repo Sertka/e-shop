@@ -24,35 +24,29 @@ import java.util.List;
 @NoArgsConstructor
 @FieldMatch(first = "password", second = "matchingPassword", message = "пароли должны совпадать")
 public class SystemUser {
-    @NotNull(message = "обязательное поле")
+
     @Size(min = 3, message = "логин должен быть больше 2-х символов")
     private String username;
 
-    @NotNull(message = "обязательное поле")
     @Size(min = 3, message = "пароль должен быть больше 3-х символов")
     private String password;
 
-    @NotNull(message = "обязательное поле")
     @Size(min = 3, message = "пароль должен быть больше 3-х символов")
     private String matchingPassword;
 
-    @NotNull(message = "обязательное поле")
     @Size(min = 1, message = "обязательное поле")
     private String firstName;
 
-    @NotNull(message = "обязательное поле")
     @Size(min = 1, message = "обязательное поле")
     private String lastName;
 
-    @NotNull(message = "обязательное поле")
     @Size(min = 8, message = "обязательное поле")
     private String phone;
 
-    @NotNull(message = "обязательное поле")
-    @Size(min = 10, message = "обязательное поле")
+    @Size(min = 10, message = "заполните адрес")
     private String address;
 
-    @NotNull(message = "обязательное поле")
+    @Size(min = 3, message = "заполните e-mail")
     @Email
     private String email;
 

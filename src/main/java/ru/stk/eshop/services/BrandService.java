@@ -25,7 +25,7 @@ public class BrandService {
     }
 
     /**
-     * All brands
+     * all brands
      * @return list of all brands
      */
     public List<Brand> findAll() {
@@ -33,7 +33,7 @@ public class BrandService {
     }
 
     /**
-     * Brand by id
+     * brand by id
      * @param id - brand id
      * @return Brand object
      */
@@ -42,7 +42,7 @@ public class BrandService {
     }
 
     /**
-     * Brand saving in DB
+     * brand saving in DB
      * @param brand - Brand object
      */
     @Transactional
@@ -51,7 +51,7 @@ public class BrandService {
     }
 
     /**
-     * Brand deleting
+     * brand delete
      * @param id - brand id
      */
     @Transactional

@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Shopping cart operations and logic.
- *
+ * Shopping cart operations and logic
  */
 @Getter
 @Setter
@@ -48,16 +47,18 @@ public class CartService {
     }
 
     /**
-     * Add product to cart by product id
+     * add product to cart by product id
+     *
      * @param productId - product id
      */
     public void addById(Long productId) {
         Product product = productService.findById(productId);
-            this.add(product);
+        this.add(product);
     }
 
     /**
-     * Add product to cart
+     * add product to cart
+     *
      * @param product - product object
      */
     public void add(Product product) {
@@ -76,33 +77,37 @@ public class CartService {
         recalculate();
     }
 
-    public void setQuantity(Product product, Integer quantity) {
-        OrderItem orderItem = findOrderFromProduct(product);
-        if (orderItem == null) {
-            return;
-        }
-        orderItem.setQuantity(quantity);
-        recalculate();
-    }
-
+    /**
+     * remove product from cart
+     *
+     * @param productId - product id
+     */
     public void removeById(Long productId) {
         Product product = productService.findById(productId);
         this.remove(product);
     }
 
+    /**
+     * remove product from cart
+     *
+     * @param product - product
+     */
     public void remove(Product product) {
         OrderItem orderItem = findOrderFromProduct(product);
         if (orderItem == null) {
             return;
         }
-        if (orderItem.getQuantity() <= 1){
+        if (orderItem.getQuantity() <= 1) {
             items.remove(orderItem);
-        }else{
+        } else {
             orderItem.setQuantity(orderItem.getQuantity() - 1);
         }
         recalculate();
     }
 
+    /**
+     * cart recalculation
+     */
     public void recalculate() {
         totalCartPrice = new BigDecimal(0);
         totalCartQuantity = 0;
@@ -116,14 +121,22 @@ public class CartService {
         displayTotalCartPrice = PriceFormatter.format(totalCartPrice);
     }
 
-    public void reset(){
+    /**
+     * cart reset
+     */
+    public void reset() {
         items = new ArrayList<>();
         BigDecimal totalCost = new BigDecimal(0);
         totalCartQuantity = 0;
     }
 
+    /**
+     * find order item by product
+     *
+     * @param product - product
+     * @return order item
+     */
     private OrderItem findOrderFromProduct(Product product) {
         return items.stream().filter(o -> o.getProduct().getId().equals(product.getId())).findFirst().orElse(null);
     }
-
 }

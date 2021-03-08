@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     /**
-     * Service role set-up
+     * Service role set-up (to be deleted for PROD)
      */
     @Autowired
     public void authConfigure(AuthenticationManagerBuilder authManager,

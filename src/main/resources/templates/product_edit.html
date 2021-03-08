@@ -1,34 +1,33 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head.html::head"></head>
+<head th:replace="fragments/head.html::head"/>
 
 <body>
-
-<nav th:replace="fragments/head.html :: logo"/>
-<nav th:replace="fragments/head.html :: navbar-admin"/>
-
+<nav th:replace="fragments/navbar.html :: logo"/>
+<nav th:replace="fragments/navbar.html :: navbar-admin"/>
 
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 10px">
         <div class="col-md-6">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title mt-2"><span th:text="${product.name == null} ? 'Добавление товара' : 'Изменение товара'"></span></h4>
+                    <h4 class="card-title mt-2"><span th:text="${product.id == null} ? 'Добавление товара' : 'Изменение товара'"></span></h4>
                 </header>
                 <div class="card-body">
-                    <form th:action="@{/product/edit}" th:object="${product}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/product/update}" th:method="post" th:object="${product}">
                         <input th:field="*{id}" type="hidden" class="form-control">
 
+                        <!-- Name -->
                         <div class="form-row">
                             <div class="col form-group">
                                 <label>Название</label>
-                                <input th:field="*{name}" type="text" class="form-control" placeholder="">
+                                <input th:field="*{name}" type="text" class="form-control" placeholder="название товара (*)">
                                 <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                             </div>
                         </div>
 
+                        <!-- Product brand -->
                         <div class="input-group">
                             <div class="form-group col-md-12" >
                                 <label>Выберите марку</label>
@@ -41,6 +40,7 @@
                             </div>
                         </div>
 
+                        <!-- Product type -->
                         <div class="input-group">
                             <div class="form-group col-md-12" >
                                 <label>Выберите категорию</label>
@@ -53,37 +53,42 @@
                             </div>
                         </div>
 
+                        <!-- Description -->
                         <div class="form-row">
                             <div class="col form-group">
                                 <label>Описание</label>
-                                <textarea th:field="*{description}" type="text" class="form-control"  th:rows="5" placeholder=""></textarea>
+                                <textarea th:field="*{description}" type="text" class="form-control"  th:rows="5" placeholder="описание товара"></textarea>
                                 <small class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
-<!--                                <input th:field="*{id}" type="number" class="invisible" placeholder="">-->
                             </div>
                         </div>
 
                         <div class="form-row">
+                            <!-- Price -->
                             <div class="col form-group">
-                                <label>Цена</label>
-                                <input th:field="*{price}" type="text" class="form-control" placeholder="">
+                                <label>Цена(руб.)</label>
+                                <input th:field="*{price}" type="text" class="form-control" placeholder="цена">
                                 <small class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"> </small>
                             </div>
+
+                            <!-- Stock amount -->
                             <div class="col form-group">
                                 <label>Количество на складе</label>
-                                <input th:field="*{stock}" type="number" class="form-control" placeholder="">
+                                <input th:field="*{stock}" type="number" class="form-control" placeholder="количество(шт.)">
                                 <small class="error" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"> </small>
                             </div>
                         </div>
 
                         <div class="form-row">
+                            <!-- Product size -->
                             <div class="col form-group">
                                 <label>Размер(В x Ш x Г мм)</label>
-                                <input th:field="*{size}" type="text" class="form-control" placeholder="">
+                                <input th:field="*{size}" type="text" class="form-control" placeholder="размер продкута без упаковки">
                                 <small class="error" th:if="${#fields.hasErrors('size')}" th:errors="*{size}"> </small>
                             </div>
+                            <!-- Product weight -->
                             <div class="col form-group">
                                 <label>Вес(г.)</label>
-                                <input th:field="*{weight}" type="number" class="form-control" placeholder="">
+                                <input th:field="*{weight}" type="number" class="form-control" placeholder="вес без упаковки">
                                 <small class="error" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"> </small>
                             </div>
                         </div>
@@ -92,15 +97,11 @@
                         <div style="margin-top: 10px" class="form-group">
                             <div class="col-sm-6 controls">
                                 <button type="submit" name="addProduct" class="btn btn-primary">Сохранить</button>
-                                <a  sec:authorize="isAnonymous()" class="btn btn-primary" data-bs-toggle="collapse" th:href="@{/product}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Отмена
-                                </a>
-                                <a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary" data-bs-toggle="collapse" th:href="@{/product}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a class="btn btn-secondary" data-bs-toggle="collapse" th:href="@{/product/admin}" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Отмена
                                 </a>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -108,7 +109,8 @@
     </div>
 </div>
 
-<script th:replace="fragments/footer.html::scripts"></script>
+<footer th:replace="fragments/footer.html::footer"></footer>
+
 </body>
 </html>
 

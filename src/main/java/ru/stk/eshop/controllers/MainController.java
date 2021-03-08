@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.stk.eshop.services.BrandService;
 import ru.stk.eshop.services.CartService;
 import ru.stk.eshop.services.ProductService;
+import ru.stk.eshop.services.UserService;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.Optional;
 
 /**
@@ -24,6 +26,7 @@ public class MainController {
     private ProductService productService;
     private BrandService brandService;
     private CartService cartService;
+    private UserService userService;
 
     @Autowired
     public void setBrandService(BrandService brandService) {
@@ -40,6 +43,11 @@ public class MainController {
         this.cartService = cartService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     /**
      * refreshes main shop page
      * @param model - model
@@ -54,7 +62,7 @@ public class MainController {
      * @return refreshed main page
      */
     @GetMapping
-    public String indexProductPage(Model model,
+    public String indexProductPage(Model model, Principal principal,
                                    @RequestParam(name = "nameFilter") Optional<String> nameFilter,
                                    @RequestParam(name = "minFilter") Optional<BigDecimal> minFilter,
                                    @RequestParam(name = "maxFilter") Optional<BigDecimal> maxFilter,
@@ -66,6 +74,9 @@ public class MainController {
 
         model.addAttribute("brands", brandService.findAll());
         model.addAttribute("cart", cartService);
+        if (principal != null && !principal.getName().equals("")) {
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+        }
         model.addAttribute("products", productService.findWithFilter(nameFilter,
                 minFilter,
                 maxFilter,

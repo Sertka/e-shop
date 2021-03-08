@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -30,22 +31,23 @@ public class User {
     @Column(name = "u_pass")
     private String password;
 
-    @NotBlank
+    @Size(min = 1, message = "обязательное поле")
     @Column(name = "u_first_name")
     private String firstName;
 
+    @Size(min = 1, message = "обязательное поле")
     @Column(name = "u_last_name")
     private String lastName;
 
-    @NotBlank
+    @Size(min = 1, message = "обязательное поле")
     @Column(name = "u_phone")
     private String phone;
 
-    @NotBlank
+    @Size(min = 1, message = "обязательное поле")
     @Column(name = "u_address")
     private String address;
 
-    @NotBlank
+    @Size(min = 1, message = "обязательное поле")
     @Column(name = "u_email")
     private String email;
 

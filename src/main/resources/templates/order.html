@@ -4,8 +4,9 @@
 
 <head th:replace="fragments/head.html :: head"/>
 
-<nav th:replace="fragments/head.html :: logo"/>
-<nav th:replace="fragments/head.html :: navbar-admin"/>
+<body>
+<nav th:replace="fragments/navbar.html :: logo"/>
+<nav th:replace="fragments/navbar.html :: navbar-admin"/>
 
 <div class="container">
     <div class="row py-2">
@@ -44,7 +45,7 @@
 
 </div>
 
-<script th:replace="fragments/footer.html :: scripts"/>
+<footer th:replace="fragments/footer.html::footer"></footer>
 
 </body>
 </html>

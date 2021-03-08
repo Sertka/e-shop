@@ -2,24 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head.html::head"></head>
+<head th:replace="fragments/head.html::head"/>
 
 <body>
-
-<nav th:replace="fragments/head.html :: logo"/>
-<nav th:replace="fragments/head.html :: navbar-admin"/>
+<nav th:replace="fragments/navbar.html :: logo"/>
+<nav th:replace="fragments/navbar.html :: navbar-admin"/>
 
 <div class="container">
 
     <div class="row py-2">
-        <!-- Button "New product" sec:authorize="hasAnyRole('ROLE_SUPER', 'ROLE_ADMIN', 'ROLE_USER')"-->
         <div class="col-12">
             <a class="btn btn-primary" th:href="@{/product/new}">Добавить товар</a>
         </div>
 
         <!-- Filter parameters-->
         <form class="form-inline mt-3" method="get">
-            <label for="form-select" class="form-label">&nbsp;&nbsp;&nbsp;Записей на странице:</label>
+            <label class="form-label">&nbsp;&nbsp;&nbsp;Записей на странице:</label>
             <select class="form-select mx-sm-3 mb-2" name="size">
                 <option selected th:text="${param.size}">записей на странице</option>
                 <option value="10">10</option>
@@ -82,7 +80,7 @@
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link"
-                           th:href="@{/product/(page=${products.previousOrFirstPageable().getPageNumber()+1},
+                           th:href="@{/product/admin/(page=${products.previousOrFirstPageable().getPageNumber()+1},
                             size=${products.size},
                             nameFilter=${param.nameFilter},
                             minFilter=${param.minFilter},
@@ -95,7 +93,7 @@
                     <li th:each="num: ${#numbers.sequence(1, products.totalPages)}"
                         th:classappend="${num == products.number + 1} ? 'active'"
                         class="page-item">
-                        <a class="page-link" th:href="@{/product/(page=${num},
+                        <a class="page-link" th:href="@{/product/admin/(page=${num},
                         size=${products.size},
                         nameFilter=${param.nameFilter},
                         minFilter=${param.minFilter},
@@ -106,7 +104,7 @@
 
                     <li class="page-item">
                         <a class="page-link"
-                           th:href="@{/product/(page=${products.nextOrLastPageable().getPageNumber()+1},
+                           th:href="@{/product/admin/(page=${products.nextOrLastPageable().getPageNumber()+1},
                             size=${products.size},
                             nameFilter=${param.nameFilter},
                             minFilter=${param.minFilter},
@@ -121,8 +119,7 @@
     </div>
 </div>
 
-<script th:replace="fragments/footer.html::scripts"></script>
-
+<footer th:replace="fragments/footer.html::footer"></footer>
 
 </body>
 </html>

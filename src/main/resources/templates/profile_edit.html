@@ -6,12 +6,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
 <nav th:replace="fragments/navbar.html :: logo"/>
-<nav th:replace="fragments/navbar.html :: navbar-admin"/>
 
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form th:action="@{/user/update}" th:method="post" th:object="${user}">
+            <form th:action="@{/profile/update}" th:method="post" th:object="${user}">
                 <input type="hidden" th:field="*{id}">
                 <div class="form-group">
                     <label>Логин</label>
@@ -54,9 +53,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}">e-mail не может быть пустым</small>
                 </div>
 
-                <div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="form-group">
-                    <label for="roles">Роли</label>
-                    <select multiple class="form-control" id="roles" th:field="*{roles}" required>
+                <div hidden class="form-group">
+                   <select multiple class="form-control" id="roles" th:field="*{roles}" required>
                         <option th:each="role : ${roles}"
                                 th:text="${role.name}"
                                 th:value="${role.id}"
@@ -64,7 +62,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Сохранить</button>
-                <a class="btn btn-secondary" data-bs-toggle="collapse" th:href="@{/user/admin}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-secondary" data-bs-toggle="collapse" th:href="@{/}" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Отмена
                 </a>
             </form>

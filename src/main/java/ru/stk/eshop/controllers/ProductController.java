@@ -114,17 +114,19 @@ public class ProductController {
      * saves new/edited product
      * @param product - edited product
      * @param bindingResult - validation
-     * @param principal - principal
+//     * @param principal - principal
      * @return product list
      */
-    @PostMapping("/edit")
-    public String updateProduct(@Valid Product product, BindingResult bindingResult, Principal principal) {
+    @PostMapping("/update")
+    public String updateProduct(@Valid Product product, BindingResult bindingResult, Model model, Principal principal) {
         if (bindingResult.hasErrors()) {
-            return "product_form";
+            model.addAttribute("brands", brandService.findAll());
+            model.addAttribute("types", typeService.findAll());
+            return "product_edit";
         }
         productService.save(product);
         logger.info("Product with id {} is created/updated by user {}", product.getId(), principal.getName());
-        return "redirect:/product";
+        return "redirect:/product/admin";
     }
 
     /**
@@ -137,13 +139,14 @@ public class ProductController {
     public String deleteProduct(@PathVariable(value = "id") Long id, Principal principal) {
         productService.deleteById(id);
         logger.info("Product with id {} is created/updated by user {}", id, principal.getName());
-        return "redirect:/product";
+        return "redirect:/product/admin";
     }
 
     @ExceptionHandler
     private ModelAndView notFoundExceptionHandler(NotFoundException e){
         ModelAndView modelAndView = new ModelAndView("not_found");
         modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        logger.error("Resource not found exception");
         return modelAndView;
     }
 }

@@ -2,10 +2,11 @@
 
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
+
 <head th:replace="fragments/head.html :: head"/>
 
 <body>
-<nav th:replace="fragments/head.html :: logo"/>
+<nav th:replace="fragments/navbar.html :: logo"/>
 
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 10px">
@@ -45,7 +46,7 @@
                         <div style="margin-top: 10px" class="form-group">
                             <div class="col-sm-6 controls">
                                 <button type="submit" class="btn btn-primary">Вход</button>
-                                <a class="btn btn-primary" data-bs-toggle="collapse" th:href="@{/}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a class="btn btn-secondary" data-bs-toggle="collapse" th:href="@{/}" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Отмена
                                 </a>
                             </div>

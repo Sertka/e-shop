@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head.html::head">
-    <nav th:replace="fragments/head.html :: logo"/>
-    <nav th:replace="fragments/head.html :: navbar-main"/>
-</head>
+<head th:replace="fragments/head.html::head"/>
 
 <body>
+<nav th:replace="fragments/navbar.html :: logo"/>
+<nav th:replace="fragments/navbar.html :: navbar-main"/>
 
 <div class="container">
 
@@ -123,8 +122,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     </div>
 </div>
 
-<script th:replace="fragments/footer.html::scripts"></script>
-
+<footer th:replace="fragments/footer.html::footer"></footer>
 
 </body>
 </html>

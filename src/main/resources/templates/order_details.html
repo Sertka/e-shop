@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments/head.html :: head">
-    <nav th:replace="fragments/head.html :: logo"/>
-</head>>
+<head th:replace="fragments/head.html :: head"/>
 
 <body>
+<nav th:replace="fragments/navbar.html :: logo"/>
+
 <div class="container">
     <div class="row py-2">
 
@@ -67,7 +67,7 @@
 
 </div>
 
-<script th:replace="fragments/footer.html :: scripts"/>
+<footer th:replace="fragments/footer.html::footer"></footer>
 
 </body>
 </html>

@@ -9,6 +9,9 @@ import ru.stk.eshop.repo.RoleRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Role entity operations
+ */
 @Service
 public class RoleService {
 
@@ -19,22 +22,38 @@ public class RoleService {
         this.repo = repo;
     }
 
+    /**
+     * find all existed roles
+     * @return role list
+     */
     public List<Role> findAll(){
         return repo.findAll();
     }
 
+    /**
+     * find role by id
+     * @param id - role id
+     * @return role (optional)
+     */
     public Optional<Role> findById(Long id) {
         return repo.findById(id);
     }
 
+    /**
+     * save role in DB
+     * @param role - role
+     */
     @Transactional
     public void save(Role role) {
         repo.save(role);
     }
 
+    /**
+     * delete role from db
+     * @param id - role id
+     */
     @Transactional
     public void deleteById(Long id) {
         repo.deleteById(id);
     }
-
 }

@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Order entity operations
+ */
 @Service
 public class OrderService {
 
@@ -29,6 +32,12 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
+    /**
+     * create new order
+     * @param cart - shopping cart
+     * @param user - client
+     * @return created order
+     */
     @Transactional
     public Order makeOrder(CartService cart, User user) {
         Order order = new Order();
@@ -46,11 +55,13 @@ public class OrderService {
             o.setOrder(order);
         }
         fillDisplayFields(order);
-
-
         return order;
     }
 
+    /**
+     * return all orders
+     * @return order list
+     */
     public List<Order> getAllOrders() {
         List<Order> list = orderRepository.findAll();
         for (Order order: list){
@@ -59,6 +70,11 @@ public class OrderService {
         return list;
     }
 
+    /**
+     * return all order for specified user
+     * @param UserId - user id
+     * @return order list
+     */
     public List<Order> getOrdersByUserId(Long UserId) {
         List<Order> list = orderRepository.findOrderByUserId(UserId);
         for (Order order: list){
@@ -67,6 +83,11 @@ public class OrderService {
         return list;
     }
 
+    /**
+     * find order by order id
+     * @param id - order id
+     * @return order or NotFound exception
+     */
     public Order findById(Long id) {
         Order order;
         if (orderRepository.findById(id).isPresent()){
@@ -78,12 +99,22 @@ public class OrderService {
         }
     }
 
+    /**
+     * save order
+     * @param order - order
+     * @return saved order (with order id)
+     */
     public Order saveOrder(Order order) {
         Order savedOrder = orderRepository.save(order);
         fillDisplayFields(savedOrder);
         return savedOrder;
     }
 
+    /**
+     * change order status
+     * @param id - order id
+     * @param newStatus - new status
+     */
     public void changeOrderStatus(Long id, OrderStatus newStatus) {
         Order order = findById(id);
         order.setStatus(newStatus);
@@ -91,6 +122,11 @@ public class OrderService {
         fillDisplayFields(savedOrder);
     }
 
+    /**
+     * change order delivery address
+     * @param id - order is
+     * @param newAddress - new address
+     */
     public void changeOrderAddress(Long id, String newAddress) {
         Order order = findById(id);
         order.setAddress(newAddress);
@@ -98,6 +134,11 @@ public class OrderService {
         fillDisplayFields(savedOrder);
     }
 
+    /**
+     * change order client contact phone
+     * @param id - order id
+     * @param newPhone - new phone
+     */
     public void changeOrderPhone(Long id, String newPhone) {
         Order order = findById(id);
         order.setPhone(newPhone);
@@ -105,6 +146,10 @@ public class OrderService {
         fillDisplayFields(savedOrder);
     }
 
+    /**
+     * set update date (now) for the order
+     * @param id - order id
+     */
     public void setOrderUpdateDate(Long id) {
         Order order = findById(id);
         order.setUpdateDate(LocalDateTime.now());
@@ -112,7 +157,10 @@ public class OrderService {
         fillDisplayFields(savedOrder);
     }
 
-
+    /**
+     * fill in order display fields
+     * @param order - order
+     */
     private void fillDisplayFields(Order order){
         order.setDisplayPrice(PriceFormatter.format(order.getPrice()));
         order.setDisplayDeliveryDate(order.getDeliveryDate().toLocalDate().toString());
@@ -125,12 +173,19 @@ public class OrderService {
         }
     }
 
+    /**
+     * delete order
+     * @param id - order id
+     */
     @Transactional
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
     }
 
-
+    /**
+     * get all order statuses
+     * @return - status list
+     */
     public ArrayList<OrderStatus> getAllStatuses(){
         ArrayList<OrderStatus> statuses = new ArrayList<>();
         Collections.addAll(statuses, OrderStatus.values());

@@ -5,9 +5,8 @@
 
 <head th:replace="fragments/head.html :: head"/>
 
-<nav th:replace="fragments/head.html :: logo"/>
-
 <body>
+<nav th:replace="fragments/navbar.html :: logo"/>
 
 <div class="container">
 	<div class="row justify-content-center">
@@ -17,20 +16,27 @@
 					<h4 class="card-title mt-2"><span th:text="'Регистрация'"></span></h4>
 				</header>
 				<article class="card-body">
-					<form th:action="@{/}" method="get" class="form-horizontal">
+					<div class="form-horizontal">
 
 						<div class="form-group">
 							<label>Пользователь зарегистрирован</label>
 
 						</div>
 
-						<button type="submit" class="btn btn-primary">На главную</button>
-					</form>
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary" data-bs-toggle="collapse" th:href="@{/user/admin}" role="button" aria-expanded="false" aria-controls="collapseExample">
+							К списку пользователей
+						</a>
+						<a sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_CLIENT')" class="btn btn-primary" data-bs-toggle="collapse" th:href="@{/}" role="button" aria-expanded="false" aria-controls="collapseExample">
+							На главную
+						</a>
+					</div>
 				</article>
 			</div>
 		</div>
 	</div>
 </div>
-<!--	 <a th:href="@{/login}">Login with new user</a>-->
+
+<footer th:replace="fragments/footer.html::footer"></footer>
+
 </body>
 </html>
